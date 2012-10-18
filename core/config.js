@@ -10,7 +10,8 @@ fifteen.config = {
 	fieldSize: 4,
 	animatinoDuration: 250,
 	useLog: true,
-	pageTarget: 'fifteen'
+	pageTarget: 'fifteen',
+	terminalNode: '123456789ABCDEF0'
 }
 
 
