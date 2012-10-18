@@ -4,19 +4,12 @@
 *                                                                          *
 ****************************************************************************/
 
-goog.provide('fifteen.log');
+goog.provide('fifteen.compat');
 
-fifteen.log.isUsed = true;
-
-fifteen.log.init = function(isUsed) {
-	if (typeof(isUsed) != 'undefined') {
-		this.isUsed = isUsed;
-	}
-}
-
-
-fifteen.log.add = function(value) {
-	if (this.isUsed && typeof(console) != 'undefined' && typeof(console.log) == 'function' ) {
-		console.log(value);
+if (!Array.prototype.forEach) {
+	Array.prototype.forEach = function(fn, scope) {
+		for(var i = 0, len = this.length; i < len; ++i) {
+			fn.call(scope || this, this[i], i, this);
+		}
 	}
 }

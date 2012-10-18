@@ -4,19 +4,16 @@
 *                                                                          *
 ****************************************************************************/
 
-goog.provide('fifteen.log');
+goog.provide('fifteen.config');
 
-fifteen.log.isUsed = true;
-
-fifteen.log.init = function(isUsed) {
-	if (typeof(isUsed) != 'undefined') {
-		this.isUsed = isUsed;
-	}
+fifteen.config = {
+	fieldSize: 4,
+	animatinoDuration: 250,
+	useLog: true,
+	pageTarget: 'fifteen'
 }
 
 
-fifteen.log.add = function(value) {
-	if (this.isUsed && typeof(console) != 'undefined' && typeof(console.log) == 'function' ) {
-		console.log(value);
-	}
+fifteen.config.init = function() {
+
 }

@@ -1,1 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<project name="fifteen" default="deps">
+	<target name="clean">
+		<delete verbose="true">
+			<fileset dir="templates" includes="**/*.soy.js"/>
+		</delete>
+		<delete verbose="true">
+			<fileset dir="" includes="fifteen-deps.js"/>
+		</delete>
+	</target>
+
+	<target name="soy" depends="clean">
+		<apply executable="java" verbose="true">
+			<arg line="-jar lib/closure/closure-templates/SoyToJsSrcCompiler.jar"/>
+			<arg line="--shouldGenerateJsdoc"/>
+			<arg line="--shouldProvideRequireSoyNamespaces"/>
+			<arg line="--outputPathFormat {INPUT_DIRECTORY}/compiled/{INPUT_FILE_NAME}.js"/>
+
+			<fileset dir="" includes="**/*.soy"/>
+		</apply>
+	</target>
+
+	<target name="deps" depends="soy">
+		<apply executable="python" verbose="true">
+			<arg line="lib/closure/closure-library/closure/bin/calcdeps.py"/>
+			<arg line="--output_mode deps"/>
+			<arg line="--output_file deps.js"/>
+			<arg line="--dep lib/closure/closure-library/"/>
+			<arg line="--path lib/closure/closure-templates/"/>
+			<arg line="--path ."/>
+			<arg value="--path"/>
+
+			<filelist dir="" files="launcher.js"/>
+		</apply>
+	</target>
+</project>
