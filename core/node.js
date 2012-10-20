@@ -11,7 +11,7 @@ String.prototype.isSolvable = function() {
 		return sum + array.slice(index).reduce(function(sum2, elem2) {
 			return sum2 + ((elem1 && elem2) ? (elem2 < elem1 ? 1 : 0) : 0);
 		}, 0);
-	}, this.indexOf(fifteen.config.emptyField).getRow())) % 2 == 1;
+	}, this.getEmptyIndex().getRow())) % 2 == 1;
 }
 
 
@@ -34,4 +34,25 @@ String.prototype.getH = function() {
 
 String.prototype.getG = function() {
 	return fifteen.config.heuristicGCost * this.length / fifteen.config.nodeLength;
+}
+
+String.prototype.getEmptyIndex = function() {
+	return this.indexOf(fifteen.config.emptyField);
+}
+
+
+String.prototype.move = function(steps) {
+	var srcArray = this.split('');
+	var resultArray = srcArray.slice(0);
+	steps.forEach(function(step) {
+		resultArray[step[1]] = srcArray[step[0]];
+	});
+	return resultArray.join('');
+}
+
+
+String.prototype.getChildren = function() {
+	return fifteen.index.moveMap[this.getEmptyIndex()].map(function(steps) {
+		return this.move(steps);
+	}, this);
 }
