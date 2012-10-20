@@ -28,7 +28,7 @@ String.prototype.getH = function() {
 
 	// Get distance between elem, coded by hex char, and his right index on the field
 	var getDistance = function(elem, index) {
-		return elem == emptyField ? 0 : Math.abs(index.getRow() - rowIndex[elem]) + Math.abs(index.getColumn() - columnIndex[elem]);
+		return elem == emptyField ? 0 : index.getRow().getDistance(rowIndex[elem]) + index.getColumn().getDistance(columnIndex[elem]);
 	}
 
 	return this.split('').reduce(function(sum, elem, index) {

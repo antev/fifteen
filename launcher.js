@@ -11,6 +11,7 @@ goog.require('fifteen.log');
 goog.require('fifteen.compat');
 goog.require('fifteen.page');
 goog.require('fifteen.node');
+goog.require('fifteen.field');
 
 
 $(document).ready(function () {

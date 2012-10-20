@@ -21,3 +21,7 @@ Number.prototype.getRow = function() {
 Number.prototype.getColumn = function() {
 	return this % fifteen.config.fieldSize;
 }
+
+Number.prototype.getDistance = function(to) {
+	return Math.abs(this - to);
+}
