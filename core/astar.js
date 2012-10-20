@@ -38,7 +38,7 @@ fifteen.astar.resolve = function(node) {
 		}
 
 		// Add children to the open list
-		node.getChildren.forEach(function(childNode) {
+		node.getChildren().forEach(function(childNode) {
 			astar.addToOpenList(childNode, parent + node);
 		});
 
@@ -59,7 +59,7 @@ fifteen.astar.addToOpenList = function(node, parent) {
 	var F = G + H;
 	
 	if (isDefined(this.openList[node])) { // This node is already exists in the open list
-		var prevG = astar.openList[node].G;
+		var prevG = this.openList[node].G;
 		if (G >= prevG) { // The better or equal solution exists in the open list
 			return;
 		}
