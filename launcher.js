@@ -12,6 +12,7 @@ goog.require('fifteen.compat');
 goog.require('fifteen.page');
 goog.require('fifteen.node');
 goog.require('fifteen.field');
+goog.require('fifteen.astar');
 
 
 $(document).ready(function () {
@@ -19,4 +20,5 @@ $(document).ready(function () {
 	fifteen.index.init();
 	fifteen.log.init();
 	fifteen.page.init();
+	fifteen.astar.init();
 });

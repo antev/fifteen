@@ -5,17 +5,22 @@
 ****************************************************************************/
 
 goog.provide('fifteen.astar');
+goog.require('fifteen.findex');
 
-fifteen.astar.terminalNode = fifteen.config.terminalNode;
-fifteen.astar.openList = {};
-fifteen.astar.openListF = {};      // F values for the elements from open list
-fifteen.astar.openListFIndex = {}; // Index by F for openListF
-fifteen.astar.closedList = {};
+fifteen.astar.init = function() {
+	this.clearLists();
+}
 
-fifteen.astar.resolve = function(node, terminalNode) {
-	if (typeof(terminalNode) == 'undefined') {
-		terminalNode = this.terminalNode;
-	}
+
+fifteen.astar.clearLists = function() {
+	this.openList = {};       // {[node => {parent, nodeF}], [node => {parent, nodeF}], ...}
+	this.closedList = {};     // {[node => true], [node => true], ...}
+	this.openListFIndex = new fifteen.findex();
+}
+
+
+fifteen.astar.resolve = function(node) {
+	var terminalNode = fifteen.config.terminalNode;
 
 	if (!node.isSolvable()) {
 		return false;
@@ -24,38 +29,41 @@ fifteen.astar.resolve = function(node, terminalNode) {
 	var astar = this;
 	astar.clearLists();
 
-	var resolve = function(node, parent) {
+	var resolve = function() {
+		var node = astar.openListFIndex.pop();
+		var parent = astar.openList[node].parent;
+
 		if (node == terminalNode) {
 			return parent + node; // Solution found
 		}
 
-		var nodeF = node.getF(parent);
+		// Add children to the open list
+		node.getChildren.forEach(function(childNode) {
+			astar.addToOpenList(childNode, parent + node);
+		});
 
-		var addToOpenList = function(node) {
-			if (typeof(astar.openList[node]) != 'undefined') { // This node is already exists in the open list
-				var prevNodeF = astar.openListF[node];
-				if (nodeF > prevNodeF) { // The better solution exists in the open list
-					return;
-				}
-				// Remove the node from the open list
-				astar.removeFromOpenListFIndex(node, prevNodeF);
-			}
-			astar.openList[node] = parent;
-			astar.addToOpenListFIndex(node, nodeF, parent);
-		}
+		delete astar.openList[node];
+		astar.closedList[node] = true;
 
-		node.getChilds.forEach(addToOpenList);
-		astar.moveToClosedList(node, nodeF);
-
-		return resolve(astar.getNextFromOpenList());
+		return resolve();
 	}
 
-	return resolve(node, '');
+	astar.addToOpenList(node, '');
+	return resolve();
 }
 
 
-fifteen.astar.clearLists = function() {
-	this.openList = {};
-	this.openListF = {};
-	this.closedList = {};
+fifteen.astar.addToOpenList = function(node, parent) {
+	var G = parent.getG();
+	var H = node.getH();
+	var F = G + H;
+	
+	if (isDefined(this.openList[node])) { // This node is already exists in the open list
+		var prevG = astar.openList[node].G;
+		if (G >= prevG) { // The better or equal solution exists in the open list
+			return;
+		}
+	}
+	this.openList[node] = {parent: parent, G: G};
+	this.openListFIndex.push(node, F);
 }

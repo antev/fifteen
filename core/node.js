@@ -15,11 +15,6 @@ String.prototype.isSolvable = function() {
 }
 
 
-String.prototype.getF = function(parent) {
-	return parent.getG + this.getH;
-}
-
-
 String.prototype.getH = function() {
 	var rowIndex = fifteen.index.rowIndex;
 	var columnIndex = fifteen.index.columnIndex;
