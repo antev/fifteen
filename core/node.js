@@ -21,13 +21,22 @@ String.prototype.getF = function(parent) {
 
 
 String.prototype.getH = function() {
-	return this.split('').reduce(function(sum, elem, index) {
-		// TODO
-	});
+	var rowIndex = fifteen.index.rowIndex;
+	var columnIndex = fifteen.index.columnIndex;
+	var heuristicHCost = fifteen.config.heuristicHCost;
+	var emptyField = fifteen.config.emptyField;
 
+	// Get distance between elem, coded by hex char, and his right index on the field
+	var getDistance = function(elem, index) {
+		return elem == emptyField ? 0 : Math.abs(index.getRow() - rowIndex[elem]) + Math.abs(index.getColumn() - columnIndex[elem]);
+	}
+
+	return this.split('').reduce(function(sum, elem, index) {
+		return sum + heuristicHCost * getDistance(elem, index);
+	}, 0);
 }
 
 
 String.prototype.getG = function() {
-	return this.length / fifteen.config.nodeLength;
+	return fifteen.config.heuristicGCost * this.length / fifteen.config.nodeLength;
 }
