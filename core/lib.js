@@ -4,19 +4,20 @@
 *                                                                          *
 ****************************************************************************/
 
-goog.provide('fifteen.config');
+goog.provide('fifteen.lib');
 
-fifteen.config = {
-	fieldSize: 4,
-	animatinoDuration: 250,
-	useLog: true,
-	pageTarget: 'fifteen',
-	terminalNode: '123456789ABCDEF0',
-	emptyField: '0',
-	allowMultipleMoving: true
+String.prototype.toArray = function() {
+	return this.split('').map(function(ch) {
+		return parseInt('0x' + ch, 16);
+	});
 }
 
 
-fifteen.config.init = function() {
-	fifteen.config.nodeLength = Math.pow(this.fieldSize, 2);
+Number.prototype.getRow = function() {
+	return Math.floor(this / fifteen.config.fieldSize);
+}
+
+
+Number.prototype.getColumn = function() {
+	return this % fifteen.config.fieldSize;
 }

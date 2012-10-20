@@ -8,29 +8,10 @@ goog.provide('fifteen.node');
 
 String.prototype.isSolvable = function() {
 	return (this.toArray().reduce(function(sum, elem1, index, array) {
-		return sum + array.slice(index).reduce(function(sum, elem2) {
-			return sum + (elem1 < elem2);
-		});
-	}, fifteen.config.emptyField.getRow(this))) % 2 == 0;
-}
-
-String.prototype.toArray = function() {
-	return this.split('').map(this.toInt, this);
-}
-
-
-String.prototype.toInt = function() {
-	return parseInt('0x' + this, 16);
-}
-
-
-String.prototype.getRow = function(index) {
-	return Math.floor(index / fifteen.config.fieldSize);
-}
-
-
-String.prototype.getColumn = function(index) {
-	return index % fifteen.config.fieldSize;
+		return sum + array.slice(index).reduce(function(sum2, elem2) {
+			return sum2 + ((elem1 && elem2) ? (elem2 < elem1 ? 1 : 0) : 0);
+		}, 0);
+	}, this.indexOf(fifteen.config.emptyField).getRow())) % 2 == 1;
 }
 
 
@@ -40,8 +21,8 @@ String.prototype.getF = function(parent) {
 
 
 String.prototype.getH = function() {
-	return this.toArray().reduce(function(sum, elem, index) {
-		//return sum +
+	return this.split('').reduce(function(sum, elem, index) {
+		// TODO
 	});
 
 }

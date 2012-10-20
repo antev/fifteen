@@ -5,6 +5,7 @@
 ****************************************************************************/
 
 goog.require('fifteen.config');
+goog.require('fifteen.lib');
 goog.require('fifteen.index');
 goog.require('fifteen.log');
 goog.require('fifteen.compat');
