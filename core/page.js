@@ -80,7 +80,6 @@ fifteen.page.shuffle = function() {
 fifteen.page.setIsPlayed = function (isPlayed) {
 	this.isPlayed = isPlayed;
 	$('#play_stop').toggleClass('stop play');
-	this.setBlockEvents(isPlayed);
 }
 
 
@@ -93,26 +92,15 @@ fifteen.page.playOrStop = function () {
 }
 
 
-fifteen.page.setBlockEvents = function (isBlocked) {
-	var method = isBlocked ? 'addClass' : 'removeClass';
-	$('*')[method]('progress');
-}
-
-
 fifteen.page.play = function() {
 	this.setIsPlayed(true);
-	var page = this;
-	var play = function() {
-		var solution = fifteen.astar.resolve(page.node);
-		page.setBlockEvents(false);
-		if (!solution) {
-			alert('This puzzle doesn\'t have solution');
-			page.stop();
-			return;
-		}
-		page.playHistory(solution);
+	var solution = fifteen.astar.resolve(this.node);
+	if (!solution) {
+		alert('This puzzle doesn\'t have solution');
+		this.stop();
+		return;
 	}
-	window.setTimeout(play, 1000);
+	this.playHistory(solution);
 }
 
 
@@ -123,6 +111,9 @@ fifteen.page.stop = function() {
 
 fifteen.page.playHistory = function(history) {
 	var next = history.getNext();
+	if (next == this.node) {
+		next = history.getNext();
+	}
 	if (!next) {
 		this.stop();
 		return;
