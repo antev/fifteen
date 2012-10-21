@@ -48,7 +48,7 @@ fifteen.page.renderPosition = function() {
 		if (hexChar != fifteen.config.emptyField) {
 			element = $('#element_' + hexChar);
 			// Move elements
-			element.get(0).moveTo(mulBySize(index.getRow()), mulBySize(index.getColumn()));
+			element.get(0).moveTo(mulBySize(index.getColumn()), mulBySize(index.getRow()));
 			// Set pointer class
 			if (goog.isDef(map[emptyPosition][index])) {
 				element.addClass('pointer');
@@ -57,4 +57,13 @@ fifteen.page.renderPosition = function() {
 			}
 		}
 	});
+}
+
+
+/**
+ * Shuffle position
+ */
+fifteen.page.shuffle = function() {
+	fifteen.page.node = fifteen.config.terminalNode.shuffle();
+	fifteen.page.renderPosition();
 }

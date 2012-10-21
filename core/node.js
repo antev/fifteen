@@ -56,3 +56,18 @@ String.prototype.getChildren = function() {
 		return this.move(steps);
 	}, this);
 }
+
+
+String.prototype.shuffle = function () {
+	var shuffledArray = this.toHexArray();
+	var length = this.length;
+	var tmp;
+
+	for(var i = 0; i <  length; i++) {
+		var rand = Math.floor((Math.random() * length));
+		tmp = shuffledArray[rand];
+		shuffledArray[rand] = shuffledArray[i];
+		shuffledArray[i] = tmp;
+	}
+	return shuffledArray.join('');
+}

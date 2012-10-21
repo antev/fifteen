@@ -17,7 +17,7 @@ fifteen.templates.page.content = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('\t');
   fifteen.templates.page.field(opt_data, output);
-  output.append('\t<div id="toolbar"><div class="toolbar-button"><div id="shuffle" class="pointer"></div></div><div class="toolbar-button"><div id="play_stop" class="play pointer"></div></div><div id="counter" class="toolbar-button">0</div></div>');
+  output.append('\t<div id="toolbar"><div class="toolbar-button"><div id="shuffle" class="pointer" onclick="fifteen.page.shuffle()"></div></div><div class="toolbar-button"><div id="play_stop" class="play pointer" onclick="fifteen.page.playOrStop()"></div></div><div id="counter" class="toolbar-button">0</div></div>');
   return opt_sb ? '' : output.toString();
 };
 
@@ -50,6 +50,6 @@ fifteen.templates.page.field = function(opt_data, opt_sb) {
  */
 fifteen.templates.page.toolbar = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('\t<div id="toolbar"><div class="toolbar-button"><div id="shuffle" class="pointer"></div></div><div class="toolbar-button"><div id="play_stop" class="play pointer"></div></div><div id="counter" class="toolbar-button">0</div></div>');
+  output.append('\t<div id="toolbar"><div class="toolbar-button"><div id="shuffle" class="pointer" onclick="fifteen.page.shuffle()"></div></div><div class="toolbar-button"><div id="play_stop" class="play pointer" onclick="fifteen.page.playOrStop()"></div></div><div id="counter" class="toolbar-button">0</div></div>');
   return opt_sb ? '' : output.toString();
 };
