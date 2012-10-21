@@ -94,3 +94,12 @@ String.prototype.removeFirst = function () {
 String.prototype.getStepCount = function () {
 	return this.length / fifteen.config.nodeLength - 1;
 }
+
+
+Array.prototype.toNode = function() {
+	return this.reduce(function(sum, array2) {
+		return sum += array2.reduce(function(sum2, elem) {
+			return sum2 += elem.toString(16);
+		}, '');
+	}, '').toUpperCase();
+}

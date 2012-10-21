@@ -140,3 +140,8 @@ fifteen.page.incCounter = function() {
 fifteen.page.updateCounter = function() {
 	$('#counter').html(this.counter);
 }
+
+
+fifteen.page.initByArray = function(arr) {
+	this.renderPosition(arr.toNode(), true);
+}
