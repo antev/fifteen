@@ -8,6 +8,7 @@ goog.require('fifteen.templates.page');
 goog.provide('fifteen.page');
 
 fifteen.page.node = fifteen.config.terminalNode;
+fifteen.page.node = '1304A2685E7B9DFC';
 //fifteen.page.node = '36A870FD4915E2CB';
 //fifteen.page.node = '26341E085D7C9BAF';
 //fifteen.page.node = 'A73654298CBFDE01'; // longest
@@ -94,11 +95,27 @@ fifteen.page.play = function() {
 	var solution = fifteen.astar.resolve(fifteen.page.node);
 	if (!solution) {
 		alert('This puzzle doesn\'t have solution');
+		fifteen.page.stop();
+		return;
 	}
 	console.log(solution);
+	fifteen.page.playHistory(solution);
 }
 
 
 fifteen.page.stop = function() {
 	fifteen.page.setIsPlayed(false);
+}
+
+
+fifteen.page.playHistory = function(history) {
+	var next = history.getNext();
+	if (!next) {
+		fifteen.page.stop();
+	}
+	fifteen.page.node = next;
+	fifteen.page.renderPosition();
+	window.setTimeout(function() {
+		fifteen.page.playHistory(history.removeFirst());
+	}, fifteen.config.animatinoDuration);
 }

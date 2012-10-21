@@ -71,3 +71,19 @@ String.prototype.shuffle = function () {
 	}
 	return shuffledArray.join('');
 }
+
+
+String.prototype.getNext = function () {
+	if (!this.length) {
+		return false;
+	}
+	return this.slice(0, fifteen.config.nodeLength);
+}
+
+
+String.prototype.removeFirst = function () {
+	if (!this.length) {
+		return false;
+	}
+	return this.slice(fifteen.config.nodeLength);
+}
