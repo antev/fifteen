@@ -74,3 +74,6 @@ div.field-element, div.toolbar-button {
 #play_stop.stop {
 	background-image: url('images/stop.png');
 }
+.progress {
+	cursor: progress;
+}

@@ -14,12 +14,13 @@ fifteen.page.node = '1304A2685E7B9DFC';
 //fifteen.page.node = 'A73654298CBFDE01'; // longest
 //A73654298CBFDE01
 fifteen.page.isPlayed = false;
+fifteen.page.counter = 0;
 
 fifteen.page.init = function() {
 	$('#' + fifteen.config.pageTarget).html(
-		fifteen.templates.page.content({elements: fifteen.page.node.toArray(), hexElements: fifteen.page.node.toHexArray()})
+		fifteen.templates.page.content({elements: this.node.toArray(), hexElements: this.node.toHexArray()})
 	);
-	this.renderPosition();
+	this.renderPosition(this.node, true);
 }
 
 
@@ -28,22 +29,29 @@ fifteen.page.init = function() {
  * @param {string} hexChar
  */
 fifteen.page.moveElement = function(hexChar) {
-	var node = fifteen.page.node;
+	var node = this.node;
 	var emptyPosition = node.getEmptyIndex();
 	var map = fifteen.index.moveMap[emptyPosition][node.indexOf(hexChar)];
 	if (!goog.isDef(map)) {
 		return;
 	}
-	fifteen.page.node = fifteen.page.node.move(map);
-	this.renderPosition();
+	this.renderPosition(this.node.move(map));
 }
 
 
 /**
- * Render current position witch is set in fifteen.page.node
+ * Render position
  */
-fifteen.page.renderPosition = function() {
-	var node = fifteen.page.node;
+fifteen.page.renderPosition = function(node, isInit) {
+	if (node == this.node && !isInit) {
+		return;
+	}
+	this.node = node;
+	if (!isInit) {
+		this.incCounter();
+	} else {
+		this.clearCounter();
+	}
 	var emptyPosition = node.getEmptyIndex();
 	var map = fifteen.index.moveMap;
 	var element;
@@ -70,52 +78,79 @@ fifteen.page.renderPosition = function() {
  * Shuffle position
  */
 fifteen.page.shuffle = function() {
-	fifteen.page.node = fifteen.config.terminalNode.shuffle();
-	fifteen.page.renderPosition();
+	this.renderPosition(fifteen.config.terminalNode.shuffle(), true);
 }
 
 
 fifteen.page.setIsPlayed = function (isPlayed) {
-	fifteen.page.isPlayed = isPlayed;
+	this.isPlayed = isPlayed;
 	$('#play_stop').toggleClass('stop play');
+	this.setBlockEvents(isPlayed);
 }
 
 
 fifteen.page.playOrStop = function () {
-	if (fifteen.page.isPlayed) {
-		fifteen.page.stop();
+	if (this.isPlayed) {
+		this.stop();
 	} else {
-		fifteen.page.play();
+		this.play();
 	}
+}
+
+
+fifteen.page.setBlockEvents = function (isBlocked) {
+	var method = isBlocked ? 'addClass' : 'removeClass';
+	$('*')[method]('progress');
 }
 
 
 fifteen.page.play = function() {
-	fifteen.page.setIsPlayed(true);
-	var solution = fifteen.astar.resolve(fifteen.page.node);
-	if (!solution) {
-		alert('This puzzle doesn\'t have solution');
-		fifteen.page.stop();
-		return;
+	this.setIsPlayed(true);
+	var page = this;
+	var play = function() {
+		var solution = fifteen.astar.resolve(page.node);
+		page.setBlockEvents(false);
+		if (!solution) {
+			alert('This puzzle doesn\'t have solution');
+			page.stop();
+			return;
+		}
+		page.playHistory(solution);
 	}
-	console.log(solution);
-	fifteen.page.playHistory(solution);
+	window.setTimeout(play, 1000);
 }
 
 
 fifteen.page.stop = function() {
-	fifteen.page.setIsPlayed(false);
+	this.setIsPlayed(false);
 }
 
 
 fifteen.page.playHistory = function(history) {
 	var next = history.getNext();
 	if (!next) {
-		fifteen.page.stop();
+		this.stop();
+		return;
 	}
-	fifteen.page.node = next;
-	fifteen.page.renderPosition();
+	this.renderPosition(next);
 	window.setTimeout(function() {
 		fifteen.page.playHistory(history.removeFirst());
 	}, fifteen.config.animatinoDuration);
+}
+
+
+fifteen.page.clearCounter = function() {
+	this.counter = 0;
+	this.updateCounter();
+}
+
+
+fifteen.page.incCounter = function() {
+	this.counter++;
+	this.updateCounter();
+}
+
+
+fifteen.page.updateCounter = function() {
+	$('#counter').html(this.counter);
 }
