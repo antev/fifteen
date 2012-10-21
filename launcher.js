@@ -4,6 +4,7 @@
 *                                                                          *
 ****************************************************************************/
 
+goog.require('goog.pubsub.PubSub');
 goog.require('fifteen.config');
 goog.require('fifteen.lib');
 goog.require('fifteen.index');
@@ -16,6 +17,8 @@ goog.require('fifteen.astar');
 
 
 $(document).ready(function () {
+	fifteen.pubsub = new goog.pubsub.PubSub();
+
 	fifteen.config.init();
 	fifteen.index.init();
 	fifteen.log.init();

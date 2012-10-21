@@ -25,7 +25,3 @@ Number.prototype.getColumn = function() {
 Number.prototype.getDistance = function(to) {
 	return Math.abs(this - to);
 }
-
-isDefined = function(value) {
-	return typeof(value) != 'undefined';
-}

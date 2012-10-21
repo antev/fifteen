@@ -37,28 +37,39 @@ fifteen.astar.resolve = function(node) {
 			return parent + node; // Solution found
 		}
 
+		// Move to closed list
+		delete astar.openList[node];
+		astar.closedList[node] = true;
+
 		// Add children to the open list
 		node.getChildren().forEach(function(childNode) {
 			astar.addToOpenList(childNode, parent + node);
 		});
 
-		delete astar.openList[node];
-		astar.closedList[node] = true;
-
-		return resolve();
+		return false;
 	}
 
 	astar.addToOpenList(node, '');
-	return resolve();
+
+	var solution = '';
+	while(!(solution = resolve())) {
+		resolve();
+	}
+
+	return solution;
 }
 
 
 fifteen.astar.addToOpenList = function(node, parent) {
+	if (goog.isDef(this.closedList[node])) {
+		return;
+	}
+
 	var G = parent.getG();
 	var H = node.getH();
 	var F = G + H;
 	
-	if (isDefined(this.openList[node])) { // This node is already exists in the open list
+	if (goog.isDef(this.openList[node])) { // This node is already exists in the open list
 		var prevG = this.openList[node].G;
 		if (G >= prevG) { // The better or equal solution exists in the open list
 			return;
