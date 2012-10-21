@@ -8,11 +8,6 @@ goog.require('fifteen.templates.page');
 goog.provide('fifteen.page');
 
 fifteen.page.node = fifteen.config.terminalNode;
-fifteen.page.node = '1304A2685E7B9DFC';
-//fifteen.page.node = '36A870FD4915E2CB';
-//fifteen.page.node = '26341E085D7C9BAF';
-//fifteen.page.node = 'A73654298CBFDE01'; // longest
-//A73654298CBFDE01
 fifteen.page.isPlayed = false;
 fifteen.page.counter = 0;
 

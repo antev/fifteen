@@ -14,6 +14,7 @@ goog.require('fifteen.page');
 goog.require('fifteen.node');
 goog.require('fifteen.field');
 goog.require('fifteen.astar');
+goog.require('fifteen.tests');
 
 
 $(document).ready(function () {
