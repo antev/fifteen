@@ -2,8 +2,42 @@
 
 /**
  * Page
+ * @param elements
+ * @param hexElements
  */
 {template .content}
-	<div id="field"></div>
-	<div id="toolbar"></div>
+	{call .field}
+		{param elements: $elements /}
+		{param hexElements: $hexElements /}
+	{/call}
+	{call .toolbar}{/call}
+{/template}
+
+
+/**
+ * Puzzle field
+ * @param elements
+ * @param hexElements
+ */
+{template .field}
+	<div id="field">
+		{foreach $hexElement in $hexElements}
+			{if $elements[index($hexElement)]}
+				<div id="element_{$hexElement}" class="field-element" data-hex="{$hexElement}">{$elements[index($hexElement)]}</div>
+			{/if}
+		{/foreach}
+
+	</div>
+{/template}
+
+
+/**
+ * Toolbar
+ */
+{template .toolbar}
+	<div id="toolbar">
+		<div id="shuffle" class="toolbar-button"></div>
+		<div id="play_stop" class="toolbar-button play"></div>
+		<div id="counter" class="toolbar-button">0</div>
+	</div>
 {/template}

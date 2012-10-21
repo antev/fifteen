@@ -12,6 +12,9 @@ String.prototype.toArray = function() {
 	});
 }
 
+String.prototype.toHexArray = function() {
+	return this.split('');
+}
 
 Number.prototype.getRow = function() {
 	return Math.floor(this / fifteen.config.fieldSize);
