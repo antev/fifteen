@@ -23,9 +23,8 @@ String.prototype.getH = function() {
 	var heuristicHCost = fifteen.config.heuristicHCost;
 	var emptyField = fifteen.config.emptyField;
 
-	// Get distance between elem, coded by hex char, and his right index on the field
 	var getDistance = function(elem, index) {
-		return elem == emptyField ? 0 : (rowIndex[index].getDistance(rowChIndex[elem]) + columnIndex[index].getDistance(columnChIndex[elem]));
+		return elem == emptyField ? 0 : (Math.abs(rowIndex[index] - rowChIndex[elem]) + Math.abs(columnIndex[index] - columnChIndex[elem]));
 	}
 
 	return this.split('').reduce(function(sum, elem, index) {
