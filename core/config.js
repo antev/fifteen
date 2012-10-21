@@ -11,6 +11,7 @@ fifteen.config = {
 	heuristicGCost: 10,
 	heuristicHCost: 45,
 	animatinoDuration: 250,
+	elementSize: 47,
 	useLog: true,
 	pageTarget: 'fifteen',
 	terminalNode: '123456789ABCDEF0',

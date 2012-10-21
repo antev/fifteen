@@ -23,7 +23,9 @@
 	<div id="field">
 		{foreach $hexElement in $hexElements}
 			{if $elements[index($hexElement)]}
-				<div id="element_{$hexElement}" class="field-element" data-hex="{$hexElement}">{$elements[index($hexElement)]}</div>
+				<div id="element_{$hexElement}" class="field-element" data-hex="{$hexElement}" onclick="fifteen.page.moveElement('{$hexElement}')">
+					{$elements[index($hexElement)]}
+				</div>
 			{/if}
 		{/foreach}
 

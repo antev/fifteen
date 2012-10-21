@@ -8,10 +8,15 @@
 	font-family: Arial,Helvetica,sans-serif;
 	font-weight: bold;
 	border: 2px solid #091552;
+	cursor: default;
 }
 
 #fifteen, #field {
 	width: 188px;
+}
+
+#field {
+	height: 188px;
 }
 
 #toolbar {
@@ -31,6 +36,7 @@ div.field-element {
 	border: #e6f5ff solid 1px;
 	color: #091552;
 	font-size: 18px;
+	position: absolute;
 }
 
 div.pointer {
