@@ -20,9 +20,11 @@ fifteen.astar.clearLists = function() {
 
 
 fifteen.astar.resolve = function(node) {
+	fifteen.log.add('Try to resolve ' + node);
 	var terminalNode = fifteen.config.terminalNode;
 
 	if (!node.isSolvable()) {
+		fifteen.log.add('This node doesn\'t have solution ' + node);
 		return false;
 	}
 
@@ -54,6 +56,7 @@ fifteen.astar.resolve = function(node) {
 	var solution = '';
 	while(!(solution = resolve())) {}
 
+	fifteen.log.add('Solution found: ' + solution.getStepCount() + ' steps');
 	return solution;
 }
 

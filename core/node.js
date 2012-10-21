@@ -87,3 +87,8 @@ String.prototype.removeFirst = function () {
 	}
 	return this.slice(fifteen.config.nodeLength);
 }
+
+
+String.prototype.getStepCount = function () {
+	return this.length / fifteen.config.nodeLength - 1;
+}
