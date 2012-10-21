@@ -52,9 +52,7 @@ fifteen.astar.resolve = function(node) {
 	astar.addToOpenList(node, '');
 
 	var solution = '';
-	while(!(solution = resolve())) {
-		resolve();
-	}
+	while(!(solution = resolve())) {}
 
 	return solution;
 }
@@ -74,7 +72,9 @@ fifteen.astar.addToOpenList = function(node, parent) {
 		if (G >= prevG) { // The better or equal solution exists in the open list
 			return;
 		}
+		this.openListFIndex.remove(node, this.openList[node].F);
 	}
-	this.openList[node] = {parent: parent, G: G};
+
+	this.openList[node] = {parent: parent, G: G, F: F};
 	this.openListFIndex.push(node, F);
 }

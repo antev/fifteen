@@ -8,6 +8,11 @@ goog.require('fifteen.templates.page');
 goog.provide('fifteen.page');
 
 fifteen.page.node = fifteen.config.terminalNode;
+//fifteen.page.node = '36A870FD4915E2CB';
+//fifteen.page.node = '26341E085D7C9BAF';
+//fifteen.page.node = 'A73654298CBFDE01'; // longest
+//A73654298CBFDE01
+fifteen.page.isPlayed = false;
 
 fifteen.page.init = function() {
 	$('#' + fifteen.config.pageTarget).html(
@@ -66,4 +71,34 @@ fifteen.page.renderPosition = function() {
 fifteen.page.shuffle = function() {
 	fifteen.page.node = fifteen.config.terminalNode.shuffle();
 	fifteen.page.renderPosition();
+}
+
+
+fifteen.page.setIsPlayed = function (isPlayed) {
+	fifteen.page.isPlayed = isPlayed;
+	$('#play_stop').toggleClass('stop play');
+}
+
+
+fifteen.page.playOrStop = function () {
+	if (fifteen.page.isPlayed) {
+		fifteen.page.stop();
+	} else {
+		fifteen.page.play();
+	}
+}
+
+
+fifteen.page.play = function() {
+	fifteen.page.setIsPlayed(true);
+	var solution = fifteen.astar.resolve(fifteen.page.node);
+	if (!solution) {
+		alert('This puzzle doesn\'t have solution');
+	}
+	console.log(solution);
+}
+
+
+fifteen.page.stop = function() {
+	fifteen.page.setIsPlayed(false);
 }
