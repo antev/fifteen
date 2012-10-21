@@ -8,8 +8,8 @@ goog.provide('fifteen.config');
 
 fifteen.config = {
 	fieldSize: 4,
-	heuristicGCost: 10,
-	heuristicHCost: 45,
+	heuristicGCost: 1,
+	heuristicHCost: 4,
 	animatinoDuration: 250,
 	elementSize: 47,
 	useLog: true,

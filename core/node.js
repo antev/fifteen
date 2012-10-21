@@ -27,13 +27,13 @@ String.prototype.getH = function() {
 	}
 
 	return this.split('').reduce(function(sum, elem, index) {
-		return sum + heuristicHCost * getDistance(elem, index) * (fifteen.config.nodeLength - index);
+		return sum + heuristicHCost * getDistance(elem, index);
 	}, 0);
 }
 
 
 String.prototype.getG = function() {
-	return fifteen.config.heuristicGCost * this.length / fifteen.config.nodeLength;
+	return fifteen.config.heuristicGCost * this.getStepCount();
 }
 
 String.prototype.getEmptyIndex = function() {
