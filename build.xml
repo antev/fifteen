@@ -36,7 +36,7 @@
 		</apply>
 	</target>
 
-	<target name="compile" depends="soy">
+	<target name="compile" depends="deps">
 		<apply executable="python" verbose="true">
 			<arg line="lib/closure/closure-library/closure/bin/calcdeps.py"/>
 			<arg line="--compiler_jar lib/closure/closure-compiler/build/compiler.jar"/>

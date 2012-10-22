@@ -9,23 +9,16 @@ goog.provide('fifteen.index');
 fifteen.index.init = function() {
 	var index = fifteen.index;
 	var config = fifteen.config;
-	var rowIndex = [];       // index used for the fast calculation row of the element
-	var columnIndex = [];    // index used for the fast calculation column of the element
-	var rowChIndex = {};     // index used for the fast calculation row of the element by char
-	var columnChIndex = {};  // index used for the fast calculation column of the element by char
-	var i, charAti;
+	var emptyField = fifteen.config.emptyField;
+	var distanceIndex = {};  // index used for the fast calculation distance between char and his right position
+	var i, j;
 	for (i = 0; i < config.nodeLength; i++) {
-		charAti = config.terminalNode.charAt(i);
-		rowChIndex[charAti] = i.getRow();
-		columnChIndex[charAti] = i.getColumn();
-		rowIndex[i] = i.getRow();
-		columnIndex[i] = i.getColumn();
+		var charAtI = config.terminalNode.charAt(i);
+		distanceIndex[config.terminalNode.charAt(i)] = [];
+		for (j = 0; j < config.nodeLength; j++) {
+			distanceIndex[config.terminalNode.charAt(i)][j] = charAtI == emptyField ? 0 : fifteen.heuristic.getDistance(i, j);
+		}
 	}
-
-
-	index.rowIndex = rowIndex;
-	index.columnIndex = columnIndex;
-	index.rowChIndex = rowChIndex;
-	index.columnChIndex = columnChIndex;
+	index.distanceIndex = distanceIndex;
 	index.moveMap = fifteen.field.getMoveMap();
 }

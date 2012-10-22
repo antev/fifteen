@@ -14,6 +14,7 @@ goog.require('fifteen.node');
 goog.require('fifteen.field');
 goog.require('fifteen.astar');
 goog.require('fifteen.tests');
+goog.require('fifteen.heuristic');
 
 $(document).ready(function () {
 	fifteen.config.init();

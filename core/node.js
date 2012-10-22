@@ -16,20 +16,9 @@ String.prototype.isSolvable = function() {
 
 
 String.prototype.getH = function() {
-	var rowChIndex = fifteen.index.rowChIndex;
-	var columnChIndex = fifteen.index.columnChIndex;
-	var rowIndex = fifteen.index.rowIndex;
-	var columnIndex = fifteen.index.columnIndex;
-	var heuristicHCost = fifteen.config.heuristicHCost;
-	var emptyField = fifteen.config.emptyField;
-
-	// Get distance between elem, coded by hex char, and his right index on the field
-	var getDistance = function(elem, index) {
-		return elem == emptyField ? 0 : (Math.abs(rowIndex[index] - rowChIndex[elem]) + Math.abs(columnIndex[index] - columnChIndex[elem]));
-	}
-
+	var distanceIndex = fifteen.index.distanceIndex;
 	return this.split('').reduce(function(sum, elem, index) {
-		return sum + heuristicHCost * getDistance(elem, index);
+		return sum + distanceIndex[elem][index];
 	}, 0);
 }
 
