@@ -171,6 +171,12 @@ fifteen.page.updateCounter = function() {
 
 
 fifteen.page.initByArray = function(arr) {
-	fifteen.page.renderPosition(arr.toNode(), true);
+	fifteen.page.initByString(arr.toNode());
 }
 goog.exportSymbol('fifteen.page.initByArray', fifteen.page.initByArray);
+
+
+fifteen.page.initByString = function(string) {
+	fifteen.page.renderPosition(string, true);
+}
+goog.exportSymbol('fifteen.page.initByString', fifteen.page.initByString);
