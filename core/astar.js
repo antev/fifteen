@@ -13,7 +13,7 @@ fifteen.astar.init = function() {
 
 
 fifteen.astar.clearLists = function() {
-	this.openList = {};       // {[node => {parent, nodeF}], [node => {parent, nodeF}], ...}
+	this.openList = {};       // {[node => {parent, F, G}], [node => {parent, F, G}], ...}
 	this.closedList = {};     // {[node => true], [node => true], ...}
 	this.openListFIndex = new fifteen.findex();
 }
