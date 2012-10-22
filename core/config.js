@@ -10,7 +10,7 @@ fifteen.config = {
 	fieldSize: 4,
 	heuristicGCost: 1,
 	heuristicHCost: 4,
-	animatinoDuration: 250,
+	animationDuration: 250,
 	elementSize: 47,
 	useLog: true,
 	pageTarget: 'fifteen',

@@ -35,6 +35,6 @@ Number.prototype.getDistance = function(to) {
 
 HTMLElement.prototype.moveTo = function(x, y) {
 	var style = this.style;
-	style.webkitTransitionDuration = style.MozTransitionDuration = style.msTransitionDuration = style.OTransitionDuration = style.transitionDuration = fifteen.config.animatinoDuration + 'ms';
+	style.webkitTransitionDuration = style.MozTransitionDuration = style.msTransitionDuration = style.OTransitionDuration = style.transitionDuration = fifteen.config.animationDuration + 'ms';
 	style.MozTransform = style.webkitTransform = style.msTransform = style.OTransform = 'translate(' + x + 'px,' + y + 'px)';
 }

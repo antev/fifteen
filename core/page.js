@@ -131,7 +131,7 @@ fifteen.page.playHistory = function(history) {
 	this.renderPosition(next);
 	window.setTimeout(function() {
 		fifteen.page.playHistory(history.removeFirst());
-	}, fifteen.config.animatinoDuration);
+	}, fifteen.config.animationDuration);
 }
 
 
