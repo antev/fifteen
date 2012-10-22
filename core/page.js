@@ -24,6 +24,9 @@ fifteen.page.init = function() {
  * @param {string} hexChar
  */
 fifteen.page.moveElement = function(hexChar) {
+	if (this.isPlayed) {
+		return;
+	}
 	var node = this.node;
 	var emptyPosition = node.getEmptyIndex();
 	var map = fifteen.index.moveMap[emptyPosition][node.indexOf(hexChar)];
@@ -49,23 +52,25 @@ fifteen.page.renderPosition = function(node, isInit) {
 	}
 	var emptyPosition = node.getEmptyIndex();
 	var map = fifteen.index.moveMap;
+	var page = this;
 	var element;
 	var mulBySize = function(i) {
 		return i * fifteen.config.elementSize;
 	}
-	node.toHexArray().forEach(function(hexChar, index) {
+	var move = function(hexChar, index) {
 		if (hexChar != fifteen.config.emptyField) {
 			element = $('#element_' + hexChar);
 			// Move elements
 			element.get(0).moveTo(mulBySize(index.getColumn()), mulBySize(index.getRow()));
 			// Set pointer class
-			if (goog.isDef(map[emptyPosition][index])) {
+			if (goog.isDef(map[emptyPosition][index]) && !page.isPlayed) {
 				element.addClass('pointer');
 			} else {
 				element.removeClass('pointer');
 			}
 		}
-	});
+	}
+	node.toHexArray().forEach(move);
 }
 
 
@@ -73,6 +78,7 @@ fifteen.page.renderPosition = function(node, isInit) {
  * Shuffle position
  */
 fifteen.page.shuffle = function() {
+	this.stop();
 	this.renderPosition(fifteen.config.terminalNode.shuffle(), true);
 }
 
@@ -84,15 +90,14 @@ fifteen.page.setIsPlayed = function (isPlayed) {
 
 
 fifteen.page.playOrStop = function () {
-	if (this.isPlayed) {
-		this.stop();
-	} else {
-		this.play();
-	}
+	this.isPlayed ? this.stop() : this.play();
 }
 
 
 fifteen.page.play = function() {
+	if (this.isPlayed) {
+		return;
+	}
 	this.setIsPlayed(true);
 	var solution = fifteen.astar.resolve(this.node);
 	if (!solution) {
@@ -105,11 +110,16 @@ fifteen.page.play = function() {
 
 
 fifteen.page.stop = function() {
-	this.setIsPlayed(false);
+	if (this.isPlayed) {
+		this.setIsPlayed(false);
+	}
 }
 
 
 fifteen.page.playHistory = function(history) {
+	if (!this.isPlayed) {
+		return;
+	}
 	var next = history.getNext();
 	if (next == this.node) {
 		next = history.getNext();
