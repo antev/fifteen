@@ -35,7 +35,7 @@ fifteen.templates.page.field = function(opt_data, opt_sb) {
   var hexElementListLen10 = hexElementList10.length;
   for (var hexElementIndex10 = 0; hexElementIndex10 < hexElementListLen10; hexElementIndex10++) {
     var hexElementData10 = hexElementList10[hexElementIndex10];
-    output.append((opt_data.elements[hexElementIndex10]) ? '<div id="element_' + soy.$$escapeHtml(hexElementData10) + '" class="field-element" data-hex="' + soy.$$escapeHtml(hexElementData10) + '" onclick="fifteen.page.moveElement(\'' + soy.$$escapeHtml(hexElementData10) + '\')">' + soy.$$escapeHtml(opt_data.elements[hexElementIndex10]) + '</div>' : '');
+    output.append((opt_data.elements[hexElementIndex10]) ? '<div id="element_' + soy.$$escapeHtml(hexElementData10) + '" class="field-element" onclick="fifteen.page.moveElement(\'' + soy.$$escapeHtml(hexElementData10) + '\')">' + soy.$$escapeHtml(opt_data.elements[hexElementIndex10]) + '</div>' : '');
   }
   output.append('</div>');
   return opt_sb ? '' : output.toString();
