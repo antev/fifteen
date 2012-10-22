@@ -39,11 +39,11 @@ div.field-element {
 	position: absolute;
 }
 
-div.pointer {
+.pointer {
 	cursor: pointer;
 }
 
-.toolbar-button .pointer {
+.toolbar-button .icon {
 	height: 32px;
 	width: 32px;
 	position: absolute;

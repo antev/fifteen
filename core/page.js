@@ -67,11 +67,7 @@ fifteen.page.renderPosition = function(node, isInit) {
 			// Move elements
 			element.get(0).moveTo(mulBySize(index.getColumn()), mulBySize(index.getRow()));
 			// Set pointer class
-			if (goog.isDef(map[emptyPosition][index]) && !page.isPlayed) {
-				element.addClass('pointer');
-			} else {
-				element.removeClass('pointer');
-			}
+			element.toggleClass('pointer', goog.isDef(map[emptyPosition][index]) && !page.isPlayed);
 		}
 	}
 	node.toHexArray().forEach(move);
@@ -90,8 +86,13 @@ goog.exportSymbol('fifteen.page.shuffle', fifteen.page.shuffle);
 
 
 fifteen.page.setIsPlayed = function (isPlayed) {
-	fifteen.page.isPlayed = isPlayed;
+	var page = fifteen.page;
+	if (isPlayed == page.isPlayed) {
+		return;
+	}
+	page.isPlayed = isPlayed;
 	$('#play_stop').toggleClass('stop play');
+	$('#counter').toggleClass('pointer', !isPlayed);
 }
 
 
@@ -148,9 +149,13 @@ fifteen.page.playHistory = function(history) {
 
 fifteen.page.clearCounter = function() {
 	var page = fifteen.page;
+	if (page.isPlayed) {
+		return;
+	}
 	page.counter = 0;
 	page.updateCounter();
 }
+goog.exportSymbol('fifteen.page.clearCounter', fifteen.page.clearCounter);
 
 
 fifteen.page.incCounter = function() {

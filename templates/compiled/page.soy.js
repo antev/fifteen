@@ -50,6 +50,6 @@ fifteen.templates.page.field = function(opt_data, opt_sb) {
  */
 fifteen.templates.page.toolbar = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('\t<div id="toolbar"><div class="toolbar-button"><div id="shuffle" class="pointer" onclick="fifteen.page.shuffle()"></div></div><div class="toolbar-button"><div id="play_stop" class="play pointer" onclick="fifteen.page.playOrStop()"></div></div><div id="counter" class="toolbar-button"><a onclick="fifteen.page.clearCounter()">0</a></div></div>');
+  output.append('\t<div id="toolbar"><div class="toolbar-button"><div id="shuffle" class="pointer icon" onclick="fifteen.page.shuffle()"></div></div><div class="toolbar-button"><div id="play_stop" class="play pointer icon" onclick="fifteen.page.playOrStop()"></div></div><div class="toolbar-button"><a id="counter" class="pointer" onclick="fifteen.page.clearCounter()">0</a></div></div>');
   return opt_sb ? '' : output.toString();
 };
