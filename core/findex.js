@@ -13,7 +13,7 @@ goog.provide('fifteen.findex');
  */
 
 fifteen.findex = function() {
-	this.data = {};
+	this.data = [];
 }
 
 
