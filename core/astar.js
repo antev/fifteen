@@ -17,6 +17,8 @@ fifteen.astar.clearLists = function() {
 	astar.openList = {};       // {[node => {parent, F, G}], [node => {parent, F, G}], ...}
 	astar.closedList = {};     // {[node => true], [node => true], ...}
 	astar.openListFIndex = new fifteen.findex();
+	astar.nodesGenerated = 0;  // Counter for log
+	astar.nodesEstimated = 0;  // Counter for log
 }
 
 
@@ -31,6 +33,7 @@ fifteen.astar.resolve = function(node) {
 	}
 
 	var nodesChecked = 0;
+	astar.nodesGenerated = astar.nodesEstimated = 0;
 	astar.clearLists();
 
 	var resolve = function() {
@@ -59,16 +62,19 @@ fifteen.astar.resolve = function(node) {
 	var solution = '';
 	while(!(solution = resolve())) {}
 
-	fifteen.log.add('Solution found: ' + solution.getStepCount() + ' steps. Nodes checked: ' + nodesChecked);
+	fifteen.log.add('Solution found: ' + solution.getStepCount() + ' steps. Nodes stat: generated: '  + astar.nodesGenerated +
+                    ' estimated: ' + astar.nodesEstimated + ' checked: ' + nodesChecked);
 	return solution;
 }
 
 
 fifteen.astar.addToOpenList = function(node, parent) {
 	var astar = fifteen.astar;
+	astar.nodesGenerated++;
 	if (goog.isDef(astar.closedList[node])) {
 		return;
 	}
+	astar.nodesEstimated++;
 
 	var G = parent.getG();
 	var H = node.getH();
