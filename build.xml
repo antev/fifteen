@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="fifteen" default="deps">
+	<property name="compiler.level" value="ADVANCED_OPTIMIZATIONS"/>
 	<target name="clean">
 		<delete verbose="true">
 			<fileset dir="templates" includes="**/*.soy.js"/>
@@ -34,4 +35,21 @@
 			<filelist dir="" files="launcher.js"/>
 		</apply>
 	</target>
+
+	<target name="compile" depends="soy">
+		<apply executable="python" verbose="true">
+			<arg line="lib/closure/closure-library/closure/bin/calcdeps.py"/>
+			<arg line="--compiler_jar lib/closure/closure-compiler/build/compiler.jar"/>
+			<arg line="--compiler_flags='--compilation_level=${compiler.level}'"/>
+			<arg line="--compiler_flags='--externs=externs.js'"/>
+			<arg line="--output_mode compiled"/>
+			<arg line="--output_file fifteen.js"/>
+			<arg line="--path lib/closure/closure-library/"/>
+			<arg line="--path lib/closure/closure-templates/"/>
+			<arg line="--path ."/>
+			<arg value="--input"/>
+			<filelist dir="." files="launcher.js"/>
+		</apply>
+	</target>
+
 </project>

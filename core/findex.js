@@ -12,6 +12,10 @@ goog.provide('fifteen.findex');
  * so the easiest value will be popped first
  */
 
+/**
+ * Constuctor for findex
+ * @constructor
+ */
 fifteen.findex = function() {
 	this.data = [];
 }

@@ -7,6 +7,7 @@
 goog.provide('fifteen.index');
 
 fifteen.index.init = function() {
+	var index = fifteen.index;
 	var config = fifteen.config;
 	var rowIndex = [];       // index used for the fast calculation row of the element
 	var columnIndex = [];    // index used for the fast calculation column of the element
@@ -21,9 +22,10 @@ fifteen.index.init = function() {
 		columnIndex[i] = i.getColumn();
 	}
 
-	this.rowIndex = rowIndex;
-	this.columnIndex = columnIndex;
-	this.rowChIndex = rowChIndex;
-	this.columnChIndex = columnChIndex;
-	this.moveMap = fifteen.field.getMoveMap();
+
+	index.rowIndex = rowIndex;
+	index.columnIndex = columnIndex;
+	index.rowChIndex = rowChIndex;
+	index.columnChIndex = columnChIndex;
+	index.moveMap = fifteen.field.getMoveMap();
 }

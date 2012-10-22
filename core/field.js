@@ -12,7 +12,7 @@ fifteen.field.onTheSameCross = function(i, j) {
 
 
 fifteen.field.isNeighbor = function(i, j) {
-	return this.onTheSameCross(i, j) && (i.getRow().getDistance(j.getRow()) == 1 || i.getColumn().getDistance(j.getColumn()) == 1);
+	return fifteen.field.onTheSameCross(i, j) && (i.getRow().getDistance(j.getRow()) == 1 || i.getColumn().getDistance(j.getColumn()) == 1);
 }
 
 
@@ -20,6 +20,7 @@ fifteen.field.isNeighbor = function(i, j) {
  * Get list of the alloved moves [emptyPos, movedPos]
  */
 fifteen.field.getAllowedMoves = function() {
+	var field = fifteen.field;
 	var allowedMoves = [];
 	var config = fifteen.config;
 	var emptyPos, movedPos;
@@ -29,9 +30,9 @@ fifteen.field.getAllowedMoves = function() {
 			if (emptyPos == movedPos) {
 				allowedMoves[emptyPos][movedPos] = false;
 			} else if (config.allowMultipleMoving) {
-				allowedMoves[emptyPos][movedPos] = this.onTheSameCross(emptyPos, movedPos);
+				allowedMoves[emptyPos][movedPos] = field.onTheSameCross(emptyPos, movedPos);
 			} else {
-				allowedMoves[emptyPos][movedPos] = this.isNeighbor(emptyPos, movedPos) ;
+				allowedMoves[emptyPos][movedPos] = field.isNeighbor(emptyPos, movedPos) ;
 			}
 		}
 	}
@@ -45,7 +46,7 @@ fifteen.field.getAllowedMoves = function() {
 fifteen.field.getMoveMap = function() {
 	// map of the allowed moves
 	var config = fifteen.config;
-	var allowedMoves = this.getAllowedMoves();
+	var allowedMoves = fifteen.field.getAllowedMoves();
 	var moveMap = {};
 	var emptyPos, movedPos;
 	

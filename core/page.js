@@ -12,10 +12,11 @@ fifteen.page.isPlayed = false;
 fifteen.page.counter = 0;
 
 fifteen.page.init = function() {
+	var page = fifteen.page;
 	$('#' + fifteen.config.pageTarget).html(
-		fifteen.templates.page.content({elements: this.node.toArray(), hexElements: this.node.toHexArray()})
+		fifteen.templates.page.content({elements: page.node.toArray(), hexElements: page.node.toHexArray()})
 	);
-	this.renderPosition(this.node, true);
+	page.renderPosition(page.node, true);
 }
 
 
@@ -24,35 +25,38 @@ fifteen.page.init = function() {
  * @param {string} hexChar
  */
 fifteen.page.moveElement = function(hexChar) {
-	if (this.isPlayed) {
+	var page = fifteen.page;
+	if (page.isPlayed) {
 		return;
 	}
-	var node = this.node;
+	var node = page.node;
 	var emptyPosition = node.getEmptyIndex();
 	var map = fifteen.index.moveMap[emptyPosition][node.indexOf(hexChar)];
 	if (!goog.isDef(map)) {
 		return;
 	}
-	this.renderPosition(this.node.move(map));
+	page.renderPosition(page.node.move(map));
 }
+goog.exportSymbol('fifteen.page.moveElement', fifteen.page.moveElement);
+
 
 
 /**
  * Render position
  */
 fifteen.page.renderPosition = function(node, isInit) {
-	if (node == this.node && !isInit) {
+	var page = fifteen.page;
+	if (node == page.node && !isInit) {
 		return;
 	}
-	this.node = node;
+	page.node = node;
 	if (!isInit) {
-		this.incCounter();
+		page.incCounter();
 	} else {
-		this.clearCounter();
+		page.clearCounter();
 	}
 	var emptyPosition = node.getEmptyIndex();
 	var map = fifteen.index.moveMap;
-	var page = this;
 	var element;
 	var mulBySize = function(i) {
 		return i * fifteen.config.elementSize;
@@ -78,80 +82,90 @@ fifteen.page.renderPosition = function(node, isInit) {
  * Shuffle position
  */
 fifteen.page.shuffle = function() {
-	this.stop();
-	this.renderPosition(fifteen.config.terminalNode.shuffle(), true);
+	var page = fifteen.page;
+	page.stop();
+	page.renderPosition(fifteen.config.terminalNode.shuffle(), true);
 }
+goog.exportSymbol('fifteen.page.shuffle', fifteen.page.shuffle);
 
 
 fifteen.page.setIsPlayed = function (isPlayed) {
-	this.isPlayed = isPlayed;
+	fifteen.page.isPlayed = isPlayed;
 	$('#play_stop').toggleClass('stop play');
 }
 
 
 fifteen.page.playOrStop = function () {
-	this.isPlayed ? this.stop() : this.play();
+	var page = fifteen.page;
+	page.isPlayed ? page.stop() : page.play();
 }
+goog.exportSymbol('fifteen.page.playOrStop', fifteen.page.playOrStop);
 
 
 fifteen.page.play = function() {
-	if (this.isPlayed) {
+	var page = fifteen.page;
+	if (page.isPlayed) {
 		return;
 	}
-	this.setIsPlayed(true);
-	var solution = fifteen.astar.resolve(this.node);
+	page.setIsPlayed(true);
+	var solution = fifteen.astar.resolve(page.node);
 	if (!solution) {
 		alert('This puzzle doesn\'t have solution');
-		this.stop();
+		page.stop();
 		return;
 	}
-	this.playHistory(solution);
+	page.playHistory(solution);
 }
 
 
 fifteen.page.stop = function() {
-	if (this.isPlayed) {
-		this.setIsPlayed(false);
+	var page = fifteen.page;
+	if (page.isPlayed) {
+		page.setIsPlayed(false);
 	}
 }
 
 
 fifteen.page.playHistory = function(history) {
-	if (!this.isPlayed) {
+	var page = fifteen.page;
+	if (!page.isPlayed) {
 		return;
 	}
 	var next = history.getNext();
-	if (next == this.node) {
+	if (next == page.node) {
 		next = history.getNext();
 	}
 	if (!next) {
-		this.stop();
+		page.stop();
 		return;
 	}
-	this.renderPosition(next);
+	page.renderPosition(next);
 	window.setTimeout(function() {
-		fifteen.page.playHistory(history.removeFirst());
+		page.playHistory(history.removeFirst());
 	}, fifteen.config.animationDuration);
 }
 
 
 fifteen.page.clearCounter = function() {
-	this.counter = 0;
-	this.updateCounter();
+	var page = fifteen.page;
+	page.counter = 0;
+	page.updateCounter();
 }
 
 
 fifteen.page.incCounter = function() {
-	this.counter++;
-	this.updateCounter();
+	var page = fifteen.page;
+	page.counter++;
+	page.updateCounter();
 }
 
 
 fifteen.page.updateCounter = function() {
-	$('#counter').html(this.counter);
+	$('#counter').html(fifteen.page.counter);
 }
 
 
 fifteen.page.initByArray = function(arr) {
-	this.renderPosition(arr.toNode(), true);
+	fifteen.page.renderPosition(arr.toNode(), true);
 }
+goog.exportSymbol('fifteen.page.initByArray', fifteen.page.initByArray);

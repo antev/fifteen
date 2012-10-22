@@ -8,18 +8,20 @@ goog.provide('fifteen.astar');
 goog.require('fifteen.findex');
 
 fifteen.astar.init = function() {
-	this.clearLists();
+	fifteen.astar.clearLists();
 }
 
 
 fifteen.astar.clearLists = function() {
-	this.openList = {};       // {[node => {parent, F, G}], [node => {parent, F, G}], ...}
-	this.closedList = {};     // {[node => true], [node => true], ...}
-	this.openListFIndex = new fifteen.findex();
+	var astar = fifteen.astar;
+	astar.openList = {};       // {[node => {parent, F, G}], [node => {parent, F, G}], ...}
+	astar.closedList = {};     // {[node => true], [node => true], ...}
+	astar.openListFIndex = new fifteen.findex();
 }
 
 
 fifteen.astar.resolve = function(node) {
+	var astar = fifteen.astar;
 	fifteen.log.add('Try to resolve ' + node);
 	var terminalNode = fifteen.config.terminalNode;
 
@@ -28,7 +30,6 @@ fifteen.astar.resolve = function(node) {
 		return false;
 	}
 
-	var astar = this;
 	var nodesChecked = 0;
 	astar.clearLists();
 
@@ -64,7 +65,8 @@ fifteen.astar.resolve = function(node) {
 
 
 fifteen.astar.addToOpenList = function(node, parent) {
-	if (goog.isDef(this.closedList[node])) {
+	var astar = fifteen.astar;
+	if (goog.isDef(astar.closedList[node])) {
 		return;
 	}
 
@@ -72,14 +74,14 @@ fifteen.astar.addToOpenList = function(node, parent) {
 	var H = node.getH();
 	var F = G + H;
 	
-	if (goog.isDef(this.openList[node])) { // This node is already exists in the open list
-		var prevG = this.openList[node].G;
+	if (goog.isDef(astar.openList[node])) { // This node is already exists in the open list
+		var prevG = astar.openList[node].G;
 		if (G >= prevG) { // The better or equal solution exists in the open list
 			return;
 		}
-		this.openListFIndex.remove(node, this.openList[node].F);
+		astar.openListFIndex.remove(node, astar.openList[node].F);
 	}
 
-	this.openList[node] = {parent: parent, G: G, F: F};
-	this.openListFIndex.push(node, F);
+	astar.openList[node] = {parent: parent, G: G, F: F};
+	astar.openListFIndex.push(node, F);
 }

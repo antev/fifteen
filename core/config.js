@@ -21,5 +21,6 @@ fifteen.config = {
 
 
 fifteen.config.init = function() {
-	fifteen.config.nodeLength = Math.pow(this.fieldSize, 2);
+	var config = fifteen.config;
+	config.nodeLength = Math.pow(config.fieldSize, 2);
 }

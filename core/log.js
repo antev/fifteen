@@ -8,18 +8,20 @@ goog.provide('fifteen.log');
 
 
 fifteen.log.init = function() {
-	this.isUsed = fifteen.config.useLog && goog.isDef(console) && goog.isFunction(console.log);
-	this.lastEventTime = this.getTime();
+	var log = fifteen.log;
+	log.isUsed = fifteen.config.useLog && goog.isDef(console) && goog.isFunction(console.log);
+	log.lastEventTime = log.getTime();
 }
 
 
 fifteen.log.add = function(value) {
-	if (!this.isUsed) {
+	var log = fifteen.log;
+	if (!log.isUsed) {
 		return;
 	}
-	var time = this.getTime();
-	console.log(time - this.lastEventTime + '\t' +  value);
-	this.lastEventTime = time;
+	var time = log.getTime();
+	console.log(time - log.lastEventTime + '\t' +  value);
+	log.lastEventTime = time;
 }
 
 

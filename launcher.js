@@ -4,12 +4,21 @@
 *                                                                          *
 ****************************************************************************/
 
-['config', 'lib', 'index', 'log', 'compat', 'page', 'node', 'field', 'astar', 'tests'].forEach(function(obj) {
-	goog.require('fifteen.' + obj);
-});
+goog.require('fifteen.config');
+goog.require('fifteen.lib');
+goog.require('fifteen.index');
+goog.require('fifteen.log');
+goog.require('fifteen.compat');
+goog.require('fifteen.page');
+goog.require('fifteen.node');
+goog.require('fifteen.field');
+goog.require('fifteen.astar');
+goog.require('fifteen.tests');
 
 $(document).ready(function () {
-	['config', 'index', 'log', 'page', 'astar'].forEach(function(obj) {
-		fifteen[obj].init();
-	});
+	fifteen.config.init();
+	fifteen.index.init();
+	fifteen.log.init();
+	fifteen.page.init();
+	fifteen.astar.init();
 });
