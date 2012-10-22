@@ -29,9 +29,11 @@ fifteen.astar.resolve = function(node) {
 	}
 
 	var astar = this;
+	var nodesChecked = 0;
 	astar.clearLists();
 
 	var resolve = function() {
+		nodesChecked++;
 		var node = astar.openListFIndex.pop();
 		var parent = astar.openList[node].parent;
 
@@ -56,7 +58,7 @@ fifteen.astar.resolve = function(node) {
 	var solution = '';
 	while(!(solution = resolve())) {}
 
-	fifteen.log.add('Solution found: ' + solution.getStepCount() + ' steps');
+	fifteen.log.add('Solution found: ' + solution.getStepCount() + ' steps. Nodes checked: ' + nodesChecked);
 	return solution;
 }
 
