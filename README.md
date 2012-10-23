@@ -1,5 +1,5 @@
-Fifteen
-=======
+Fifteen puzzle
+==============
 
 Try it
 ------
@@ -12,6 +12,14 @@ Use Console
 `fifteen.page.initByString(string);` to init by string (For example '123456789ABCDEF0' - is an initial position).
 
 `fifteen.tests.run();` to run tests.
+
+Compilation
+-----------
+Appache Ant is used to build project.
+
+`ant deps` to compile templates.
+
+`ant compile` to compile whole project.
 
 Known issues
 ------------
