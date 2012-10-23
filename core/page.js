@@ -9,6 +9,7 @@ goog.provide('fifteen.page');
 
 fifteen.page.node = fifteen.config.terminalNode;
 fifteen.page.isPlayed = false;
+fifteen.page.isBlocked = false;
 fifteen.page.counter = 0;
 
 fifteen.page.init = function() {
@@ -26,7 +27,7 @@ fifteen.page.init = function() {
  */
 fifteen.page.moveElement = function(hexChar) {
 	var page = fifteen.page;
-	if (page.isPlayed) {
+	if (page.isPlayed || page.isBlocked) {
 		return;
 	}
 	var node = page.node;
@@ -79,6 +80,9 @@ fifteen.page.renderPosition = function(node, isInit) {
  */
 fifteen.page.shuffle = function() {
 	var page = fifteen.page;
+	if (page.isBlocked) {
+		return;
+	}
 	page.stop();
 	page.renderPosition(fifteen.config.terminalNode.shuffle(), true);
 }
@@ -98,6 +102,9 @@ fifteen.page.setIsPlayed = function (isPlayed) {
 
 fifteen.page.playOrStop = function () {
 	var page = fifteen.page;
+	if (page.isBlocked) {
+		return;
+	}
 	page.isPlayed ? page.stop() : page.play();
 }
 goog.exportSymbol('fifteen.page.playOrStop', fifteen.page.playOrStop);
@@ -109,13 +116,25 @@ fifteen.page.play = function() {
 		return;
 	}
 	page.setIsPlayed(true);
-	var solution = fifteen.astar.resolve(page.node);
-	if (!solution) {
-		alert('This puzzle doesn\'t have solution');
-		page.stop();
-		return;
-	}
-	page.playHistory(solution);
+	var play = function() {
+		var solution = fifteen.astar.resolve(page.node);
+		page.setBlocked(false);
+		if (!solution) {
+			alert('This puzzle doesn\'t have solution');
+			page.stop();
+			return;
+		}
+		page.playHistory(solution);
+	};
+	page.setBlocked(true);
+	window.setTimeout(play, 500);
+
+}
+
+
+fifteen.page.setBlocked = function(isBlocked) {
+	$('*').toggleClass('progress', isBlocked);
+	fifteen.page.isBlocked = isBlocked;
 }
 
 
@@ -149,7 +168,7 @@ fifteen.page.playHistory = function(history) {
 
 fifteen.page.clearCounter = function() {
 	var page = fifteen.page;
-	if (page.isPlayed) {
+	if (page.isPlayed || page.isBlocked) {
 		return;
 	}
 	page.counter = 0;
