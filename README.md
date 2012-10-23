@@ -12,3 +12,7 @@ Use Console
 `fifteen.page.initByString(string);` to init by string (For example '123456789ABCDEF0' - is an initial position).
 
 `fifteen.tests.run();` to run tests.
+
+Known issues
+------------
+It was tested only in the Google Chrome browser. There is no any guarantee that it will work in any other browser.
