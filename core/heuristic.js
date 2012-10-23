@@ -17,5 +17,5 @@ fifteen.heuristic.getDistance = function(i, j) {
 	var pow = function(a, b) {
 		return Math.pow((a - b), 2);
 	}
-	return Math.round(Math.sqrt((pow(iRow, jRow) + pow(iColumn, jColumn))) * fifteen.config.heuristicHCost);
+	return Math.round(Math.sqrt((pow(iRow, jRow) + pow(iColumn, jColumn))) * fifteen.config.heuristicHCost + fifteen.config.heuristicHZeroCost);
 }
